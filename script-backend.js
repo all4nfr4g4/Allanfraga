@@ -247,6 +247,31 @@ document.addEventListener('DOMContentLoaded', function() {
     const contactForm = document.getElementById('contact-form');
     const submitBtn = document.getElementById('submit-btn');
     
+    // Testar conexão com o servidor
+    async function testServerConnection() {
+        try {
+            const protocol = window.location.protocol;
+            const host = window.location.host;
+            const testUrl = `${protocol}//${host}/api/test`;
+            
+            const response = await fetch(testUrl);
+            if (response.ok) {
+                const data = await response.json();
+                console.log('✅ Servidor conectado:', data);
+                return true;
+            } else {
+                console.warn('⚠️ Servidor respondeu com status:', response.status);
+                return false;
+            }
+        } catch (error) {
+            console.warn('⚠️ Servidor pode não estar disponível:', error.message);
+            return false;
+        }
+    }
+    
+    // Testar conexão ao carregar a página
+    testServerConnection();
+    
     if (contactForm && submitBtn) {
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -275,11 +300,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 const protocol = window.location.protocol;
                 const host = window.location.host;
                 const serverUrl = `${protocol}//${host}`;
+                const endpointUrl = `${serverUrl}/send-email`;
                 
-                console.log('📨 Enviando email para:', serverUrl + '/send-email');
+                console.log('📨 Endpoint:', endpointUrl);
+                console.log('📦 Dados:', formData);
                 
                 // Enviar para o backend
-                const response = await fetch(`${serverUrl}/send-email`, {
+                const response = await fetch(endpointUrl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -287,11 +314,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     body: JSON.stringify(formData)
                 });
                 
+                console.log('📊 Status da resposta:', response.status);
+                console.log('📋 Headers da resposta:', response.headers);
+                
                 if (!response.ok) {
-                    throw new Error(`Erro HTTP: ${response.status}`);
+                    const errorText = await response.text();
+                    console.error('❌ Erro HTTP:', response.status, errorText);
+                    throw new Error(`HTTP ${response.status}: ${errorText || response.statusText}`);
                 }
                 
                 const result = await response.json();
+                console.log('✅ Resposta do servidor:', result);
                 
                 if (result.success) {
                     // Sucesso
@@ -318,7 +351,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('❌ Erro ao enviar email:', error);
                 submitBtn.textContent = 'Erro ao enviar';
                 submitBtn.classList.remove('loading');
-                showNotification(`Erro ao enviar mensagem: ${error.message}`, 'error');
+                
+                let mensagemErro = 'Erro ao enviar mensagem';
+                if (error.message.includes('405')) {
+                    mensagemErro = 'Erro 405: Rota não permitida. Servidor pode estar mal configurado.';
+                } else if (error.message.includes('ECONNREFUSED')) {
+                    mensagemErro = 'Não conseguiu conectar ao servidor. Verifique se ele está rodando.';
+                } else if (error.message) {
+                    mensagemErro = `Erro: ${error.message}`;
+                }
+                
+                showNotification(mensagemErro, 'error');
                 
                 // Voltar ao estado original após 3 segundos
                 setTimeout(() => {

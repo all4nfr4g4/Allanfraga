@@ -1,14 +1,8 @@
-# 📧 Guia de Configuração - Sistema de Contatos
+# 📧 Configuração Completa do Sistema de Contatos
 
-## ❌ Problema: Mensagens de contato não são recebidas
+## 🎯 Objetivo
 
-### 🔍 Causas Comuns
-
-1. **Servidor não está rodando** - A requisição é feita, mas ninguém está escutando
-2. **Variáveis de ambiente não configuradas** - Sem EMAIL_USER e EMAIL_PASS
-3. **Senha de app do Gmail inválida** - Usando senha normal em vez de senha de app
-4. **URL incorreta do servidor** - Caminho errado ou porta diferente
-5. **CORS bloqueando a requisição** - Problema de cross-origin
+Enviar mensagens de contato **direto para seu email** usando Node.js + Gmail.
 
 ---
 

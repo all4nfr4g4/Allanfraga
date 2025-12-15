@@ -7,9 +7,14 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(cors());
+// Middleware - ORDEM IMPORTANTE!
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type']
+}));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../')));
 
 // Configuração do Nodemailer
@@ -97,8 +102,31 @@ app.post('/send-email', async (req, res) => {
     }
 });
 
-// Servir o portfólio
+// Rota de teste
+app.get('/api/test', (req, res) => {
+    res.json({ 
+        success: true, 
+        message: 'Servidor está funcionando corretamente!',
+        timestamp: new Date().toISOString()
+    });
+});
+
+// Rota de status de email
+app.get('/api/email-status', (req, res) => {
+    const hasConfig = !!(process.env.EMAIL_USER && process.env.EMAIL_PASS);
+    res.json({ 
+        emailConfigured: hasConfig,
+        server: 'ok'
+    });
+});
+
+// Servir o portfólio (deve ser a última rota GET)
 app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../index.html'));
+});
+
+// Fallback para todas as outras rotas GET (serve index.html para SPA)
+app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../index.html'));
 });
 
