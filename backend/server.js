@@ -21,6 +21,15 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+// Testar conexão ao iniciar
+transporter.verify((error, success) => {
+    if (error) {
+        console.error('Erro na configuração de email:', error);
+    } else {
+        console.log('✅ Servidor de email conectado com sucesso');
+    }
+});
+
 // Rota para enviar email
 app.post('/send-email', async (req, res) => {
     try {
@@ -42,18 +51,29 @@ app.post('/send-email', async (req, res) => {
                 message: 'Email inválido' 
             });
         }
+
+        // Verificar se as variáveis de ambiente estão configuradas
+        if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+            console.error('❌ Erro: EMAIL_USER ou EMAIL_PASS não configurados no .env');
+            return res.status(500).json({ 
+                success: false, 
+                message: 'Erro de configuração do servidor. Verifique as variáveis de ambiente.' 
+            });
+        }
         
         // Configurar email
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: process.env.EMAIL_USER, // Seu email
+            replyTo: user_email, // Permitir responder diretamente ao cliente
             subject: `Nova mensagem do portfólio - ${subject}`,
             html: `
                 <h2>Nova mensagem do portfólio</h2>
-                <p><strong>De:</strong> ${user_name} (${user_email})</p>
+                <p><strong>De:</strong> ${user_name}</p>
+                <p><strong>Email:</strong> <a href="mailto:${user_email}">${user_email}</a></p>
                 <p><strong>Assunto:</strong> ${subject}</p>
                 <p><strong>Mensagem:</strong></p>
-                <p>${message.replace(/\n/g, '<br>')}</p>
+                <p style="white-space: pre-wrap; font-family: monospace;">${message.replace(/\n/g, '<br>')}</p>
                 <hr>
                 <p><em>Enviado através do formulário de contato do portfólio.</em></p>
             `
@@ -62,16 +82,17 @@ app.post('/send-email', async (req, res) => {
         // Enviar email
         await transporter.sendMail(mailOptions);
         
+        console.log(`✅ Email enviado com sucesso de ${user_email}`);
         res.json({ 
             success: true, 
             message: 'Mensagem enviada com sucesso!' 
         });
         
     } catch (error) {
-        console.error('Erro ao enviar email:', error);
+        console.error('❌ Erro ao enviar email:', error);
         res.status(500).json({ 
             success: false, 
-            message: 'Erro interno do servidor' 
+            message: 'Erro ao enviar mensagem: ' + error.message 
         });
     }
 });

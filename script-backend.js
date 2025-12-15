@@ -271,14 +271,25 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.classList.add('loading');
             
             try {
+                // Determinar a URL do servidor
+                const protocol = window.location.protocol;
+                const host = window.location.host;
+                const serverUrl = `${protocol}//${host}`;
+                
+                console.log('📨 Enviando email para:', serverUrl + '/send-email');
+                
                 // Enviar para o backend
-                const response = await fetch('/send-email', {
+                const response = await fetch(`${serverUrl}/send-email`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(formData)
                 });
+                
+                if (!response.ok) {
+                    throw new Error(`Erro HTTP: ${response.status}`);
+                }
                 
                 const result = await response.json();
                 
@@ -287,6 +298,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     submitBtn.textContent = 'Enviado!';
                     submitBtn.classList.remove('loading');
                     showNotification('Mensagem enviada com sucesso! Entrarei em contato em breve.', 'success');
+                    
+                    console.log('✅ Email enviado com sucesso');
                     
                     // Limpar formulário
                     contactForm.reset();
@@ -297,15 +310,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         submitBtn.disabled = false;
                     }, 3000);
                 } else {
-                    throw new Error(result.message);
+                    throw new Error(result.message || 'Erro ao enviar mensagem');
                 }
                 
             } catch (error) {
                 // Erro
-                console.error('Erro ao enviar email:', error);
+                console.error('❌ Erro ao enviar email:', error);
                 submitBtn.textContent = 'Erro ao enviar';
                 submitBtn.classList.remove('loading');
-                showNotification('Erro ao enviar mensagem. Tente novamente ou entre em contato diretamente.', 'error');
+                showNotification(`Erro ao enviar mensagem: ${error.message}`, 'error');
                 
                 // Voltar ao estado original após 3 segundos
                 setTimeout(() => {
