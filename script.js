@@ -168,8 +168,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Inicializar EmailJS
-    emailjs.init("YOUR_PUBLIC_KEY"); // Substitua pela sua chave pública do EmailJS
+    emailjs.init("6SagPx746TChhP4vQ"); // Substitua pela sua chave pública do EmailJS
     
+
     // Função para mostrar notificação
     function showNotification(message, type = 'success') {
         // Criar elemento de notificação
@@ -276,8 +277,8 @@ document.addEventListener('DOMContentLoaded', function() {
             try {
                 // Enviar email usando EmailJS
                 const result = await emailjs.send(
-                    'YOUR_SERVICE_ID', // Substitua pelo seu Service ID
-                    'YOUR_TEMPLATE_ID', // Substitua pelo seu Template ID
+                    'Fraga.Dev', // Substitua pelo seu Service ID
+                    'template_zb632yc', // Substitua pelo seu Template ID
                     {
                         from_name: formData.user_name,
                         from_email: formData.user_email,
