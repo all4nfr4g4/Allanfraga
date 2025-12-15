@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function() {
             try {
                 // Enviar email usando EmailJS
                 const result = await emailjs.send(
-                    'Fraga.Dev', // Substitua pelo seu Service ID
+                    'service_Fraga.Dev', // Substitua pelo seu Service ID
                     'template_zb632yc', // Substitua pelo seu Template ID
                     {
                         from_name: formData.user_name,
