@@ -141,7 +141,7 @@ body::before {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    background: var(--bg-primary);
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
     color: var(--text-primary);
     position: relative;
     overflow: hidden;
@@ -155,11 +155,10 @@ body::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background: 
-        radial-gradient(circle at 30% 20%, rgba(0, 255, 65, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 70% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 20% 80%, rgba(255, 0, 128, 0.1) 0%, transparent 50%);
-    z-index: -1;
+    background-image: 
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><circle cx="10" cy="10" r="2" fill="%230ea5e9" opacity="0.3"/><path d="M 20 20 L 50 30 L 80 20" stroke="%232563eb" stroke-width="1" fill="none" opacity="0.2"/><rect x="30" y="40" width="20" height="20" fill="none" stroke="%2364748b" stroke-width="1" opacity="0.2"/></svg>');
+    background-size: 150px 150px;
+    z-index: 1;
 }
 
 .hero::after {
@@ -170,14 +169,10 @@ body::before {
     right: 0;
     bottom: 0;
     background: 
-        repeating-linear-gradient(
-            45deg,
-            transparent,
-            transparent 2px,
-            rgba(0, 255, 65, 0.05) 2px,
-            rgba(0, 255, 65, 0.05) 4px
-        );
-    z-index: -1;
+        radial-gradient(circle at 30% 20%, rgba(14, 165, 233, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 70% 80%, rgba(37, 99, 235, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 20% 80%, rgba(100, 116, 139, 0.1) 0%, transparent 50%);
+    z-index: 1;
 }
 
 .hero-content {
@@ -198,23 +193,26 @@ body::before {
     line-height: 1.2;
     margin-bottom: 1.5rem;
     position: relative;
-    color: var(--text-primary);
+    color: #ffffff;
+    text-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
 }
 
 
 .highlight {
-    background: var(--gradient-primary);
+    background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.5));
 }
 
 
 .hero-subtitle {
     font-size: 1.25rem;
     margin-bottom: 2rem;
-    opacity: 0.9;
+    opacity: 0.95;
     line-height: 1.6;
+    color: #e0e7ff;
 }
 
 .hero-buttons {
@@ -236,10 +234,10 @@ body::before {
 }
 
 .btn-primary {
-    background: var(--primary-color);
+    background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
     color: white;
-    border: 2px solid var(--primary-color);
-    box-shadow: var(--shadow-md);
+    border: 2px solid transparent;
+    box-shadow: 0 0 20px rgba(14, 165, 233, 0.4);
     position: relative;
     overflow: hidden;
 }
@@ -251,7 +249,7 @@ body::before {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
     transition: left 0.5s;
 }
 
@@ -260,16 +258,16 @@ body::before {
 }
 
 .btn-primary:hover {
-    background: var(--primary-dark);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
+    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 0 30px rgba(14, 165, 233, 0.6);
 }
 
 .btn-secondary {
     background: transparent;
-    color: var(--primary-color);
-    border: 2px solid var(--primary-color);
-    box-shadow: var(--shadow-sm);
+    color: #0ea5e9;
+    border: 2px solid #0ea5e9;
+    box-shadow: 0 0 10px rgba(14, 165, 233, 0.2);
     position: relative;
     overflow: hidden;
 }
@@ -1472,5 +1470,279 @@ html {
 
 .btn-shimmer:hover::before {
     left: 100%;
+}
+
+/* ========================================== */
+/* NOVOS DIFERENCIAIS FUTURISTAS */
+/* ========================================== */
+
+/* 1. THEME SELECTOR - Toggle Dark/Light */
+.theme-selector {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 999;
+}
+
+.theme-toggle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid rgba(14, 165, 233, 0.5);
+    background: rgba(26, 26, 46, 0.8);
+    color: #0ea5e9;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 20px rgba(14, 165, 233, 0.2);
+}
+
+.theme-toggle:hover {
+    background: rgba(14, 165, 233, 0.15);
+    box-shadow: 0 0 30px rgba(14, 165, 233, 0.4);
+    transform: scale(1.1);
+}
+
+/* Tema Light */
+body.light-theme {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f5f5f7;
+    --text-primary: #1e293b;
+    --text-secondary: #475569;
+}
+
+body.light-theme .header {
+    background: rgba(255, 255, 255, 0.95);
+    border-bottom: 1px solid #e0e0e0;
+}
+
+body.light-theme .hero {
+    background: linear-gradient(135deg, #ffffff 0%, #f5f5f7 50%, #e8e8f0 100%);
+}
+
+body.light-theme .theme-toggle {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: #0ea5e9;
+    color: #0ea5e9;
+}
+
+/* 2. CURSOR TRAIL EFFECT */
+#cursor-trail {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 999;
+}
+
+.cursor-dot {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #0ea5e9, rgba(14, 165, 233, 0));
+    pointer-events: none;
+    box-shadow: 0 0 10px rgba(14, 165, 233, 0.6);
+}
+
+/* 3. TIMELINE SECTION - Jornada Profissional */
+.timeline-section {
+    padding: 6rem 0;
+    background: linear-gradient(135deg, rgba(26, 26, 46, 0.05) 0%, rgba(15, 52, 96, 0.05) 100%);
+    position: relative;
+}
+
+.timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 3rem auto;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, #0ea5e9, #06b6d4, transparent);
+    opacity: 0.5;
+}
+
+.timeline-item {
+    margin-bottom: 2rem;
+    position: relative;
+    opacity: 0;
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.timeline-item:nth-child(1) { animation-delay: 0.1s; }
+.timeline-item:nth-child(2) { animation-delay: 0.2s; }
+.timeline-item:nth-child(3) { animation-delay: 0.3s; }
+.timeline-item:nth-child(4) { animation-delay: 0.4s; }
+
+.timeline-item:nth-child(odd) {
+    margin-left: 0;
+    margin-right: auto;
+    padding-right: 50%;
+    text-align: right;
+}
+
+.timeline-item:nth-child(even) {
+    margin-left: auto;
+    margin-right: 0;
+    padding-left: 50%;
+    text-align: left;
+}
+
+.timeline-marker {
+    position: absolute;
+    right: -36px;
+    top: 0;
+    width: 72px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.timeline-item:nth-child(even) .timeline-marker {
+    left: -36px;
+    right: auto;
+}
+
+.timeline-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #0ea5e9;
+    border: 4px solid rgba(26, 26, 46, 0.9);
+    box-shadow: 0 0 20px rgba(14, 165, 233, 0.6),
+                inset 0 0 10px rgba(14, 165, 233, 0.3);
+    transition: all 0.3s ease;
+}
+
+.timeline-item:hover .timeline-dot {
+    width: 30px;
+    height: 30px;
+    box-shadow: 0 0 40px rgba(14, 165, 233, 0.8),
+                inset 0 0 15px rgba(14, 165, 233, 0.5);
+}
+
+.timeline-content {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    border-radius: 10px;
+    border: 1px solid rgba(14, 165, 233, 0.2);
+    box-shadow: 0 0 20px rgba(14, 165, 233, 0.1);
+    transition: all 0.3s ease;
+}
+
+.timeline-item:hover .timeline-content {
+    border-color: rgba(14, 165, 233, 0.5);
+    box-shadow: 0 0 40px rgba(14, 165, 233, 0.2),
+                0 10px 40px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+}
+
+.timeline-content h3 {
+    color: #0ea5e9;
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+}
+
+.timeline-date {
+    display: inline-block;
+    background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-content p {
+    color: #475569;
+    line-height: 1.6;
+}
+
+/* 4. SKILL RADAR - Habilidades em Gráfico Radial */
+.skill-radar {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin: 2rem auto;
+}
+
+.radar-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(14, 165, 233, 0.1), transparent);
+    border: 1px solid rgba(14, 165, 233, 0.2);
+}
+
+.radar-background::before,
+.radar-background::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    border: 1px dashed rgba(14, 165, 233, 0.1);
+}
+
+.radar-background::before {
+    width: 66%;
+    height: 66%;
+    top: 17%;
+    left: 17%;
+}
+
+.radar-background::after {
+    width: 33%;
+    height: 33%;
+    top: 33.5%;
+    left: 33.5%;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .timeline::before {
+        left: 10px;
+    }
+
+    .timeline-item:nth-child(odd),
+    .timeline-item:nth-child(even) {
+        margin-left: 60px;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+        text-align: left;
+    }
+
+    .timeline-marker {
+        left: -20px !important;
+        right: auto !important;
+    }
+
+    .theme-selector {
+        top: 100px;
+    }
 }
 

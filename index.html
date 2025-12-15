@@ -10,6 +10,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Theme Selector -->
+    <div class="theme-selector">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Alternar tema">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+
+    <!-- Cursor Trail Effect -->
+    <div id="cursor-trail"></div>
+
     <!-- Header -->
     <header class="header">
         <nav class="nav">
@@ -20,6 +30,7 @@
                 <li><a href="#home" class="nav-link">Início</a></li>
                 <li><a href="#about" class="nav-link">Sobre</a></li>
                 <li><a href="#skills" class="nav-link">Habilidades</a></li>
+                <li><a href="#timeline" class="nav-link">Timeline</a></li>
                 <li><a href="#projects" class="nav-link">Projetos</a></li>
                 <li><a href="#contact" class="nav-link">Contato</a></li>
             </ul>
@@ -182,6 +193,55 @@
                             <i class="fab fa-figma"></i>
                             <span>Figma</span>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section - NOVO DIFERENCIAL -->
+    <section id="timeline" class="timeline-section">
+        <div class="container">
+            <h2 class="section-title reveal">Jornada Profissional</h2>
+            <div class="timeline">
+                <div class="timeline-item reveal-scale stagger-1">
+                    <div class="timeline-marker">
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>Iniciante em Desenvolvimento</h3>
+                        <span class="timeline-date">2022</span>
+                        <p>Comecei minha jornada em programação estudando HTML, CSS e JavaScript. Primeiro contato com a web.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal-scale stagger-2">
+                    <div class="timeline-marker">
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>Full Stack Developer</h3>
+                        <span class="timeline-date">2023</span>
+                        <p>Aprofundei em React, Node.js e MongoDB. Comecei a desenvolver aplicações mais complexas e robustas.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal-scale stagger-3">
+                    <div class="timeline-marker">
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>Especialização em DevOps</h3>
+                        <span class="timeline-date">2024</span>
+                        <p>Estudo de Docker, Kubernetes e CI/CD. Melhorando a eficiência operacional de projetos.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal-scale stagger-4">
+                    <div class="timeline-marker">
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <h3>Segurança & Cloud</h3>
+                        <span class="timeline-date">2025</span>
+                        <p>Foco em cybersecurity, AWS e melhores práticas. Evoluindo constantemente como profissional.</p>
                     </div>
                 </div>
             </div>

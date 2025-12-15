@@ -449,3 +449,155 @@ interactiveElements.forEach(el => {
         cursor.style.background = 'var(--primary-color)';
     });
 });
+
+});
+
+// ========================================== 
+// NOVOS DIFERENCIAIS FUTURISTAS
+// ========================================== 
+
+// 1. THEME TOGGLE - Dark/Light Mode
+function initThemeToggle() {
+    const themeToggle = document.getElementById('theme-toggle');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    // Verificar preferência salva ou do sistema
+    const savedTheme = localStorage.getItem('theme') || (prefersDark ? 'dark' : 'light');
+    
+    function setTheme(theme) {
+        if (theme === 'light') {
+            document.body.classList.add('light-theme');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        } else {
+            document.body.classList.remove('light-theme');
+            themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+        localStorage.setItem('theme', theme);
+    }
+    
+    // Aplicar tema inicial
+    setTheme(savedTheme);
+    
+    // Toggle ao clicar
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+        setTheme(currentTheme === 'light' ? 'dark' : 'light');
+    });
+}
+
+// 2. CURSOR TRAIL EFFECT - Efeito de rastro do cursor
+function initCursorTrail() {
+    const trailContainer = document.getElementById('cursor-trail');
+    let mouseX = 0;
+    let mouseY = 0;
+    
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        
+        // Criar ponto de rastro com probabilidade
+        if (Math.random() > 0.8) {
+            createTrailDot(mouseX, mouseY);
+        }
+    });
+    
+    function createTrailDot(x, y) {
+        const dot = document.createElement('div');
+        dot.className = 'cursor-dot';
+        dot.style.left = (x - 4) + 'px';
+        dot.style.top = (y - 4) + 'px';
+        trailContainer.appendChild(dot);
+        
+        // Animar e remover
+        let opacity = 1;
+        const interval = setInterval(() => {
+            opacity -= 0.05;
+            dot.style.opacity = opacity;
+            
+            if (opacity <= 0) {
+                clearInterval(interval);
+                dot.remove();
+            }
+        }, 30);
+    }
+}
+
+// 3. ANIMAÇÃO DE SCROLL COM PARALLAX AVANÇADO
+function initAdvancedParallax() {
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        
+        // Efeito parallax no hero
+        const hero = document.querySelector('.hero');
+        if (hero) {
+            hero.style.backgroundPosition = `0 ${scrolled * 0.5}px`;
+        }
+        
+        // Animar timeline ao fazer scroll
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        timelineItems.forEach(item => {
+            const rect = item.getBoundingClientRect();
+            const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+            
+            if (isVisible) {
+                item.classList.add('active');
+            }
+        });
+    });
+}
+
+// 4. SKILL RADAR - Visualização Radial de Habilidades
+function initSkillRadar() {
+    const skills = document.querySelectorAll('.skill-item');
+    const radar = document.querySelector('.skill-radar');
+    
+    if (radar && skills.length > 0) {
+        // Animar skills em padrão circular
+        skills.forEach((skill, index) => {
+            skill.style.animation = `float 3s ease-in-out ${index * 0.1}s infinite`;
+        });
+    }
+}
+
+// 5. ANIMAÇÕES INTERATIVAS HOVER
+function initInteractiveAnimations() {
+    const projectCards = document.querySelectorAll('.project-card');
+    const skillCategories = document.querySelectorAll('.skill-category');
+    
+    projectCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-10px) scale(1.02)';
+            this.style.boxShadow = '0 20px 40px rgba(14, 165, 233, 0.3)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+            this.style.boxShadow = '';
+        });
+    });
+    
+    skillCategories.forEach(category => {
+        category.addEventListener('mouseenter', function() {
+            const items = this.querySelectorAll('.skill-item');
+            items.forEach(item => {
+                item.style.transform = 'scale(1.1)';
+            });
+        });
+        
+        category.addEventListener('mouseleave', function() {
+            const items = this.querySelectorAll('.skill-item');
+            items.forEach(item => {
+                item.style.transform = 'scale(1)';
+            });
+        });
+    });
+}
+
+// 6. INICIALIZAR TUDO
+document.addEventListener('DOMContentLoaded', () => {
+    initThemeToggle();
+    initCursorTrail();
+    initAdvancedParallax();
+    initSkillRadar();
+    initInteractiveAnimations();
+});
